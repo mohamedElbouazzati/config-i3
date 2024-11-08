@@ -2,7 +2,7 @@
 
 # Start of field: Variables to change depending on your i3 config
 # There is no pattern in the distribution of workspaces on the outputs
-evenodd=true
+evenodd=false
 # Max amount of workspaces on this system
 WS_MAX=10
 # End of field
