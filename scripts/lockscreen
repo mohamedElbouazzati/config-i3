@@ -1,0 +1,3 @@
+#!/bin/bash
+
+i3lock -kFi /usr/share/backgrounds/ubuntu-wallpaper-d.png --date-color=F1F1F1 --time-color=FAFAFA #--no-verify

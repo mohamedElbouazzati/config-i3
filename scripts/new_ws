@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# Start of field: Variables to change depending on your i3 config
+# There is no pattern in the distribution of workspaces on the outputs
+evenodd=true
+# Max amount of workspaces on this system
+WS_MAX=10
+# End of field
+
+# The number of the next workspace
+ws_next=0
+
+# An array of booleans indicating which of the currently opened workspaces is focused
+ws_focus=($(i3-msg -t get_workspaces | tr ',' '\n' | grep "focused" | awk -F: '{print $2}'))
+# An array of the numbers associated with the currently opened workspaces
+ws_num=($(i3-msg -t get_workspaces | tr ',' '\n' | grep "num" | awk -F: '{print int($2)}'))
+
+# The amount of workspaces opened
+nb_ws=${#ws_focus[@]}
+
+# Current workspace
+ws_curr=0
+
+# Find the current workspace's number
+for i in $(seq 0 ${nb_ws})
+do
+	if [[ ${ws_focus[$i]} == 'true' ]]; then
+		ws_curr=${ws_num[$i]}
+	fi
+done
+
+# The amount of "active" outputs
+nb_out=$(i3-msg -t get_outputs | tr ',' '\n' | grep "\"active\":true" | wc -l)
+
+if [[ $ws_curr -ne 0 ]]; then
+	if [[ $evenodd == true ]]; then
+		# Which output is the current workspace on; from which number should the loop begin
+		if [[ `echo "$ws_curr % 2" | bc` -eq 0 ]]; then
+			sta=2
+		else
+			sta=1
+		fi
+		# Stepping
+		if [[ $nb_out == 2 ]]; then
+			ste=2
+		else
+			ste=1
+		fi
+
+		# Main loop by outputs
+		found=false
+		for out in $(seq 1 $nb_out)
+		do
+			# If no ws was available on the last output
+			if [[ $found == false ]]; then
+				# Find a free (non active non focused) workspace on an output
+				for i in $(seq $sta $ste $WS_MAX)
+				do
+					#if [[ ! ${ws_num[*]} =~ $i && $ws -ne $WS_MAX-$sta && $found == false ]]; then
+					if [[ ! ${ws_num[*]} =~ $i && $found == false ]]; then
+						ws_next=$i
+						found=true
+					fi
+				done
+			fi
+			# If this output does not have a free ws, check the other output
+			if [[ $ste = 2 && $sta = 2 ]]; then
+				sta=1
+			elif [[ $sta = 1 ]]; then
+				sta=2
+			fi
+		done
+	else
+		found=false
+		# Direct & simple loop for workspaces without a pattern
+		for i in $(seq 1 1 $WS_MAX)
+		do
+			if [[ ! ${ws_num[*]} =~ $i && $found == false ]]; then
+				ws_next=$i
+				found=true
+			fi
+		done
+	fi
+
+elif [[ $ws_curr -eq 0 ]]; then
+	echo "You should not have run that shady command you saw on SO"
+fi
+
+if [[ $ws_next -gt 0 && $ws_next -le $WS_MAX ]]; then
+	#echo $ws_next
+	# Switch to the new ws
+	i3-msg workspace number $ws_next
+else
+	echo -e "\nNo workspaces available, please organise your WM\n"
+fi
