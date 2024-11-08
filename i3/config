@@ -31,7 +31,7 @@ exec --no-startup-id dex --autostart --environment i3
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 #exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-exec --no-startup-id xss-lock /home/romain/.config/scripts/i3lock/lockscreen
+exec --no-startup-id xss-lock ~/.config/scripts/i3lock/lockscreen
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -261,20 +261,20 @@ bar {
 #exec --no-startup-id picom --config /home/romain/.config/picom.conf --backend xr_glx_hybrid --vsync-use-glfinish
 
 # Workspace assignments
-workspace $ws1 output DP-2 DP-1-6
-workspace $ws3 output DP-2 DP-1-6
-workspace $ws5 output DP-2 DP-1-6
-workspace $ws7 output DP-2 DP-1-6
-workspace $ws9 output DP-2 DP-1-6
-workspace $wsch output DP-2 DP-1-6
-workspace $ws2 output DP-1-6 DP-2
-workspace $ws4 output DP-1-6 DP-2
-workspace $ws6 output DP-1-6 DP-2
-workspace $ws8 output DP-1-6 DP-2
-workspace $ws10 output DP-1-6 DP-2
-workspace $wstb output DP-2
-workspace $wsent output DP-1-6
-workspace $wsteams output DP-2
+# workspace $ws1 output DP-2 DP-1-6
+# workspace $ws3 output DP-2 DP-1-6
+# workspace $ws5 output DP-2 DP-1-6
+# workspace $ws7 output DP-2 DP-1-6
+# workspace $ws9 output DP-2 DP-1-6
+# workspace $wsch output DP-2 DP-1-6
+# workspace $ws2 output DP-1-6 DP-2
+# workspace $ws4 output DP-1-6 DP-2
+# workspace $ws6 output DP-1-6 DP-2
+# workspace $ws8 output DP-1-6 DP-2
+# workspace $ws10 output DP-1-6 DP-2
+# workspace $wstb output DP-2
+# workspace $wsent output DP-1-6
+# workspace $wsteams output DP-2
 
 # Container assignments
 assign [class="thunderbird"] $wstb
@@ -288,7 +288,7 @@ focus_follows_mouse yes
 workspace_auto_back_and_forth yes
 
 # Keyboard shortcuts
-bindsym $mod+x exec --no-startup-id /home/elbouazz/.config/scripts/lockscreen
+bindsym $mod+x exec --no-startup-id ~/.config/scripts/lockscreen
 bindsym $mod+F1 exec --no-startup-id firefox
 bindsym $mod+Shift+x move workspace to output next
 
@@ -298,13 +298,13 @@ bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 #bindsym $mod+Shift+f floating toggle
-bindsym Print exec --no-startup-id maim "/home/elbouazz/Pictures/$(date +%Y-%m-%d_%H%M%S).png"
-bindsym Shift+Print exec --no-startup-id maim --select "/home/elbouazz/Pictures/$(date +%Y-%m-%d_%H%M%S).png"
-#bindsym XF86BrightnessUp exec --no-startup-id brightnessctl set +5%
-#bindsym XF86BrightnessDown exec --no-startup-id brightnessctl set 5%-
+bindsym Print exec --no-startup-id maim "~/Pictures/$(date +%Y-%m-%d_%H%M%S).png"
+bindsym Shift+Print exec --no-startup-id maim --select "~/Pictures/$(date +%Y-%m-%d_%H%M%S).png"
+bindsym XF86BrightnessUp exec --no-startup-id brightnessctl set +5%
+bindsym XF86BrightnessDown exec --no-startup-id brightnessctl set 5%-
 bindsym Shift+XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +1% && $refresh_i3status
 bindsym Shift+XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -1% && $refresh_i3status
-bindsym $mod+Tab exec --no-startup-id /home/elbouazz/.config/scripts/new_ws
+bindsym $mod+Tab exec --no-startup-id ~/.config/scripts/new_ws
 bindsym Mod1+Tab workspace next
 bindsym Mod1+Shift+Tab workspace prev
 
@@ -314,11 +314,11 @@ default_floating_border pixel 3
 for_window [all] title_window_icon on
 
 # Desktop background
-exec_always feh --bg-scale /home/elbouazz/Pictures/bg/bg.png
+exec_always feh --bg-scale ~/.config/pictures/bg.png
 
 # RandR
 #exec_always --no-startup-id xrandr --output DP-1-6 --auto --output DP-2 --pos 1920x550
-exec_always --no-startup-id bash /home/elbouazz/.screenlayout/configdesktop.sh
+# exec_always --no-startup-id bash ~/.screenlayout/configdesktop.sh
 # Applications at startup
 exec --no-startup-id thunderbird
 exec --no-startup-id spotify
