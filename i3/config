@@ -31,7 +31,7 @@ exec --no-startup-id dex --autostart --environment i3
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 #exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-exec --no-startup-id xss-lock ~/.config/scripts/i3lock/lockscreen
+exec --no-startup-id xss-lock ~/.config/scripts/lockscreen
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -127,7 +127,7 @@ set $ws4 "4"
 set $ws5 "5"
 set $ws6 "6"
 set $ws7 "7"
-set $ws8 "Zotero"
+set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 set $wstb "ThunderdBird"
@@ -135,7 +135,8 @@ set $wsch "Firefox"
 set $wsent "Entertainment"
 set $wsteams "Teams"
 
-
+set $ecran1 "DP-1-1"
+set $ecran2 "eDP-1"
 
 # switch to workspace
 bindsym $mod+ampersand workspace number $ws1
@@ -261,26 +262,23 @@ bar {
 #exec --no-startup-id picom --config /home/romain/.config/picom.conf --backend xr_glx_hybrid --vsync-use-glfinish
 
 # Workspace assignments
-# workspace $ws1 output DP-2 DP-1-6
-# workspace $ws3 output DP-2 DP-1-6
-# workspace $ws5 output DP-2 DP-1-6
-# workspace $ws7 output DP-2 DP-1-6
-# workspace $ws9 output DP-2 DP-1-6
-# workspace $wsch output DP-2 DP-1-6
-# workspace $ws2 output DP-1-6 DP-2
-# workspace $ws4 output DP-1-6 DP-2
-# workspace $ws6 output DP-1-6 DP-2
-# workspace $ws8 output DP-1-6 DP-2
-# workspace $ws10 output DP-1-6 DP-2
-# workspace $wstb output DP-2
-# workspace $wsent output DP-1-6
-# workspace $wsteams output DP-2
+workspace $ws1 output $ecran2 $ecran1
+workspace $ws3 output $ecran2 $ecran1
+workspace $ws5 output $ecran2 $ecran1
+workspace $ws7 output $ecran2 $ecran1
+workspace $ws9 output $ecran2 $ecran1
+workspace $wsch output $ecran2 $ecran1
+workspace $ws2 output $ecran1 $ecran2
+workspace $ws4 output $ecran1 $ecran2
+workspace $ws6 output $ecran1 $ecran2
+workspace $ws8 output $ecran1 $ecran2
+workspace $ws10 output $ecran1 $ecran2
+workspace $wstb output $ecran2
+workspace $wsent output $ecran1
+workspace $wsteams output $ecran2
 
 # Container assignments
-assign [class="thunderbird"] $wstb
 assign [class="firefox"] $wsch
-assign [class="Zotero"] $ws8
-assign [class="Spotify"] $wsent
 assign [class="teams-for-linux"] $wsteams
 
 # Environment configuration
@@ -314,14 +312,12 @@ default_floating_border pixel 3
 for_window [all] title_window_icon on
 
 # Desktop background
-exec_always feh --bg-scale ~/.config/pictures/bg.png
+exec_always feh --bg-scale "$HOME/.config/pictures/bg.png"
 
 # RandR
-#exec_always --no-startup-id xrandr --output DP-1-6 --auto --output DP-2 --pos 1920x550
-# exec_always --no-startup-id bash ~/.screenlayout/configdesktop.sh
+#exec_always --no-startup-id xrandr --output $ecran1 --auto --output $ecran2 --pos 1920x550
+exec_always --no-startup-id bash ~/.screenlayout/screen.sh
 # Applications at startup
-exec --no-startup-id thunderbird
-exec --no-startup-id spotify
 exec --no-startup-id teams-for-linux
 exec --no-startup-id firefox
-exec --no-startup-id /opt/Zotero_linux-x86_64/zotero
+
